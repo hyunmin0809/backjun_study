@@ -11,7 +11,51 @@
     // (이면 total++, N++
     // )이면 N--
 
+#include<iostream>
+#include<stack>
 
+using namespace std;
+
+int solution(string input){
+    stack<char> st; 
+    int answer = 0;
+
+    for(int i = 0; i < input.size(); i++){
+        if(input[i] == '('){
+            st.push('(');
+        }
+        else{
+            st.pop();
+            if(input[i-1] == '('){
+                answer += st.size();
+            }
+            else
+                answer++;
+        }
+    }
+    return answer;
+}
+
+int main(){
+    string input;
+
+    cin >> input;
+
+    cout << solution(input);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+/*
 #include <iostream>
 #include <string>
 
@@ -54,3 +98,89 @@ int main(){
     cout << solution(input);
     return 0;
 }
+
+#include<iostream>
+#include<stack>
+
+using namespace std;
+
+int solution(const string str){
+    //스택 선언 
+    stack<char> st;
+    //answer 선언
+    int answer = 0;
+    
+    //포문 돌림. str 받은거 하나하나 넣어서 확인용
+    for(int i = 0; i < str.length(); i++){
+        //만약 str[i] 가 여는 괄호인 경우
+        if(str[i] == '('){
+            st.push('(');
+        }
+            //스택에 ( 넣어줌
+        //닫힌 괄호인 경우
+        else{ 
+            //st.pop() 해줌
+            st.pop();
+            //이전 문자가 (라면 (레이저란 소리)
+            if(str[i-1] == '('){
+                //ans에 스택 사이즈만큼 추가해준다. 
+                answer += st.size();
+            }
+            else
+            //만약 이전 문자가 )라면 막데리 끝
+                answer++;
+                //그냥 쇠막대기 ++ 해준다. 
+        }
+    }
+    //answer  리턴
+    return answer;
+}
+
+int main(){
+    string str;
+    cin >> str;
+
+    int answer = solution(str);
+    cout << answer;
+
+    return 0;
+}
+
+
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int solution(string input){
+    int answer = 0;
+    stack<char> st;
+    
+    for(int i = 0; i < input.size(); i++){
+        if(input[i] == '('){
+            st.push('(');
+        }
+        else{
+            st.pop();
+            if(input[i-1] == '('){
+                //레이저란 소리
+                answer += st.size();
+            }
+            else{
+                answer++;
+            }
+        }
+    }
+    return answer;
+}
+
+int main(){
+    string str;
+    cin >> str;
+    
+    int answer = solution(str);
+    cout << answer;
+    
+    return 0;
+}
+*/

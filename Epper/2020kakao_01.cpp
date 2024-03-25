@@ -11,6 +11,7 @@
 
 7. 라고 생각했는데....... 걍 그때그때 조건달고 하기가 힘들어서 걍 num 확정되면 해주는걸로
 */
+/*
 
 #include<iostream>
 #include <string>
@@ -73,4 +74,124 @@ int main(){
 
     cout << solution(s);
     return 0;
+}
+
+#include<iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int getShortenedLength(string target, int unit_length){
+    //기존 타겟의 길이 선언
+    int length = target.length();
+    //줄어든 길이 선언
+    int shortLen = length;
+    //전에 잘려진 문자열 선언
+    string prevStr = "";
+    //반복 횟수 선언 
+    int count = 1;
+
+    //부분 문자열 인덱스. 이걸로 while문 돌릴 것이다.
+    //left 선언 //현재 위치
+    int left = 0;
+    //right 선언 //얘가 target.length 넘으면 아웃
+    int right = unit_length;
+
+    //while문 선언.
+    while(right <= length){ //범위 주의
+        //현재 자른 문자열 선언. 이때는 substr을 사용한다. (substr사용법. str.(시작idx,unit))
+        string curStr = target.substr(left, unit_length);
+        //만약 잘린 문자열 == 전에 잘려진 문자열
+        if(prevStr == curStr){
+            //반복횟수 +1
+            count++;
+        }
+        else{
+        //아니라면
+            //만약 반복횟수 > 1
+            if(count > 1){
+                //압축된 길이 수정 문자열 단축해주고, 앞에 있는 반복횟수 숫자만큼 늘려주기
+                shortLen -= (count-1)*unit_length;
+                shortLen += to_string(count).length(); //중요
+            }
+            //이제 prev 문자열 교체
+            prevStr = curStr;
+            //반복횟수도 초기화
+            count = 1;
+        }
+        //이제 left right 조정
+        left += unit_length;
+        right += unit_length;
+    }
+    //while문 나오고 남아있는는 압축 문자열 반영하기.
+    if(count > 1){
+        shortLen -= (count-1) * unit_length;
+        shortLen += to_string(count).length();
+    }
+    return shortLen;
+}
+
+int solution(string given_str){
+    //answer 선언. 
+    int answer = given_str.length();
+
+    //for문 돌린다. 단위 unit k = 1 부터 str의 반값까지
+    for(int k = 1; k <= given_str.length()/2; k++){
+        //answer 는 기존 값과 줄어든 값의 최솟값. 줄어든 값은 getShortenedLength 로 구한다.  
+        answer = min(answer, getShortenedLength(given_str,k));
+    }
+
+    return answer;
+}*/
+
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int getShortenLength(string target, int unit_length){
+    int length = target.size();
+    int shortenLen = length;
+    
+    string prevStr = "";
+    
+    int cnt = 1;
+    
+    int left = 0;
+    int right = unit_length;
+    
+    while(right <= length){
+        string curStr = target.substr(left, unit_length);
+        if(curStr == prevStr){
+            cnt++;
+        }
+        else{
+            if(cnt > 1){
+                shortenLen += to_string(cnt).size();
+                shortenLen -= (cnt-1)*unit_length;
+            }
+            cnt = 1;
+            prevStr = curStr;
+        }
+        left += unit_length;
+        right += unit_length;
+    }
+    
+    if(cnt > 1){
+        shortenLen += to_string(cnt).size();
+        shortenLen -= (cnt-1)*unit_length;
+    }
+    
+    return shortenLen;
+}
+
+int solution(string s) {
+    int answer = s.length();
+    
+    for(int i = 1; i <= s.size()/2; i++){ //i는 unit
+        answer = min(answer, getShortenLength(s,i));
+    }
+    return answer;
 }
