@@ -1,14 +1,12 @@
 #include <iostream>
 using namespace std;
 
-bool IsOnjeonsu(int n) {
-    if(n % 2 == 0)
-        return false;
-    if(n % 10 == 5)
-        return false;
-    if(n % 3 == 0 && n % 9 != 0)
-        return false;
-    return true;
+string IsOnjeonsu(int n) {
+    if(n % 100 == 0 && n % 400 != 0)
+        return "false";
+    if(n % 4 == 0)
+        return "true";
+    return "false";
 }
 
 int main() {
