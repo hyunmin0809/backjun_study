@@ -15,6 +15,9 @@ int sol(int a, int b, int c){
         case '/' : 
             return a / c; 
             break;
+        default :
+            return -100;
+            break;
     }
 }
 
@@ -24,6 +27,11 @@ int main() {
 
     cin >> a>> b >> c;
 
-    cout << a << " " << b << " " << c << " = " << sol(a,b,c); 
+    int result = sol(a,b,c);
+
+    if(result == -100)
+        cout << "False";
+    else
+        cout << a << " " << b << " " << c << " = " << sol(a,b,c); 
     return 0;
 }
