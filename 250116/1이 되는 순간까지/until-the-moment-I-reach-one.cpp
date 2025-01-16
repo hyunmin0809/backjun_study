@@ -9,19 +9,19 @@ int f(int n){
         return cnt;
     }
     else if(n % 2 == 0){ //짝수
-        return n/2;
         cnt++;
+        return f(n/2);
     }
     else {
-        return n/3;
         cnt++;
+        return f(n/3);
     }
 }
 
 int main() {
     cin >> N;
 
-    cout >> f(N);
+    cout << f(N);
 
     return 0;
 }
