@@ -11,7 +11,7 @@ int f(int cnt, int max){
     if(arr[cnt-1] > max){
         max = arr[cnt-1];
     }
-    return f(cnt--, max);
+    return f(--cnt, max);
 }
 
 int main() {
